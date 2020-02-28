@@ -1,0 +1,11 @@
+
+[
+   { "visitId": 1, "activity": "Fuerza", "subactivities": [ {"SubActivity": "Pecho"} ], "date": "20180505", "time": "12:38", "isCheckedOut": "true" } ,
+   { "visitId": 2, "activity": "Fuerza", "subactivities": [ {"SubActivity": "Pecho"} ], "date": "20180505", "time": "12:38" , "isCheckedOut": "true" } ,
+   { "visitId": 3, "activity": "Fuerza", "subactivities": [ {"SubActivity": "Pecho"} ], "date": "20180505", "time": "12:38" , "isCheckedOut": "true" } ,
+   { "visitId": 4, "activity": "Fuerza", "subactivities": [ {"SubActivity": "Pecho"} ], "date": "20180505", "time": "12:38" , "isCheckedOut": "true" } ,
+   { "visitId": 5, "activity": "Fuerza", "subactivities": [ {"SubActivity": "Pecho"} ], "date": "20180505", "time": "12:38" , "isCheckedOut": "true" } ,
+   { "visitId": 6, "activity": "Fuerza", "subactivities": [ {"SubActivity": "Pecho"} ], "date": "20180505", "time": "12:38" , "isCheckedOut": "true" } ,
+   { "visitId": 7, "activity": "Fuerza", "subactivities": [ {"SubActivity": "Pecho"} ], "date": "20180505", "time": "12:38" , "isCheckedOut": "true" } 
+]
+
