@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GymTracker.Serverless.AddVisit", "GymTracker.Serverless.AddVisit.csproj", "{82A7B595-FE28-4652-B4AA-FEBCDB99DE04}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{82A7B595-FE28-4652-B4AA-FEBCDB99DE04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82A7B595-FE28-4652-B4AA-FEBCDB99DE04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82A7B595-FE28-4652-B4AA-FEBCDB99DE04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82A7B595-FE28-4652-B4AA-FEBCDB99DE04}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {600E29C2-4E6D-4370-AEB9-1031D0EA0329}
+	EndGlobalSection
+EndGlobal
