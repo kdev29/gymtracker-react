@@ -1,11 +1,1 @@
-
-[
-   { "visitId": 1, "activity": "Fuerza", "subactivities": [ {"SubActivity": "Pecho"} ], "date": "20180505", "time": "12:38", "isCheckedOut": "true" } ,
-   { "visitId": 2, "activity": "Fuerza", "subactivities": [ {"SubActivity": "Pecho"} ], "date": "20180505", "time": "12:38" , "isCheckedOut": "true" } ,
-   { "visitId": 3, "activity": "Fuerza", "subactivities": [ {"SubActivity": "Pecho"} ], "date": "20180505", "time": "12:38" , "isCheckedOut": "true" } ,
-   { "visitId": 4, "activity": "Fuerza", "subactivities": [ {"SubActivity": "Pecho"} ], "date": "20180505", "time": "12:38" , "isCheckedOut": "true" } ,
-   { "visitId": 5, "activity": "Fuerza", "subactivities": [ {"SubActivity": "Pecho"} ], "date": "20180505", "time": "12:38" , "isCheckedOut": "true" } ,
-   { "visitId": 6, "activity": "Fuerza", "subactivities": [ {"SubActivity": "Pecho"} ], "date": "20180505", "time": "12:38" , "isCheckedOut": "true" } ,
-   { "visitId": 7, "activity": "Fuerza", "subactivities": [ {"SubActivity": "Pecho"} ], "date": "20180505", "time": "12:38" , "isCheckedOut": "true" } 
-]
-
+{"statusCode":200,"headers":{"Content-Type":"application/json","Access-Control-Allow-Origin":"*"},"multiValueHeaders":null,"body":"[{\"visitId\":3,\"date\":\"2020-02-28\",\"activity\":\"Fuerza\",\"isCheckedOut\":\"false\",\"subactivities\":[\"Brazo\",\"Hombro\"]},{\"visitId\":2,\"date\":\"2020-02-27\",\"activity\":\"Descanso activo\",\"isCheckedOut\":\"false\",\"subactivities\":[\"Natación\"]},{\"visitId\":1,\"date\":\"2/27/2020\",\"activity\":\"Fuerza\",\"isCheckedOut\":\"false\",\"subactivities\":[\"Brazo\",\"Pierna\"]}]","isBase64Encoded":false}

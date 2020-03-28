@@ -15,6 +15,9 @@ const Counter = (props) => {
             padding: '5% 5%'
           },
         },
+        material: {
+          header4: 'header4'
+        }
       }));
 
       const classes = useStyles();
@@ -24,8 +27,9 @@ const Counter = (props) => {
         
       <Container fixed>
           <Paper>
-              <div><h1>Visitas esta semana</h1>
-                <h2>{props.visits.length}</h2>
+              <div>
+                <h4 className={classes.material.header4}>Visitas esta semana</h4>
+                <h4 className={classes.material.header4}>{props.visits.length}</h4>
               </div>
 
               </Paper>

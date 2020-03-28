@@ -1,0 +1,50 @@
+[
+  {
+    "type": "Fuerza",
+    "subType": "Brazo"
+  },
+  {
+    "type": "Fuerza",
+    "subType": "Pecho"
+  },
+  {
+    "type": "Fuerza",
+    "subType": "Pierna"
+  },
+  {
+    "type": "Fuerza",
+    "subType": "Hombro"
+  },
+   {
+    "type": "Fuerza",
+    "subType": "Espalda"
+  },
+  {
+    "type": "Descanso activo",
+    "subType": "Natación"
+  },
+  {
+    "type": "Descanso activo",
+    "subType": "Baile"
+  },
+  {
+    "type": "Descanso activo",
+    "subType": "Otra clase"
+  },
+  {
+    "type": "Cardio",
+    "subType": "Caminadora"
+  },
+  {
+    "type": "Cardio",
+    "subType": "Escaladora"
+  },
+  {
+    "type": "Cardio",
+    "subType": "Bicicleta"
+  },
+  {
+    "type": "Cardio",
+    "subType": "Otro"
+  }
+]

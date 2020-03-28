@@ -8,6 +8,10 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import axios from 'axios';
 import URLs from '../utils/configs';
+import {Link as RouterLink, BrowserRouter as Router} from 'react-router-dom';
+import * as visitActions from '../redux/actions/visitsActions';
+import { connect } from 'react-redux';
+import { bindActionCreators }  from 'redux';
 
 
  const useStyles = makeStyles(theme => ({
@@ -23,29 +27,15 @@ import URLs from '../utils/configs';
 
 
 
-const MainDashboard = () => {
+const MainDashboard = (props) => {
 
-    const [visits, setVisits] = useState([]);  
-
+    //use effect hook
     useEffect(() => {
-      
-      
-      if(visits.length == 0) {
-  
-        // axios.get('http://localhost:3000/visits.json').then(resp => {
-        //   console.log('App() => useEffect() =>',resp);
-        //   setVisits(resp.data);
-        // });
-  
-        axios.get(URLs.getAllURL).then(resp => {
-            debugger;
-          console.log('App() => useEffect().AWS =>',resp);
-  
-          let results = JSON.parse(resp.data.body);
-  
-          setVisits(results);
-        });
-      }
+                    
+        if(props.visits.length === 0) {
+
+          props.actions.loadVisits();
+        }
   
     })
     
@@ -54,10 +44,10 @@ const MainDashboard = () => {
     return (
         <React.Fragment>            
             {/* <VisitaActiva /> */}
-            <Counter visits={visits}></Counter>
-            <TableListing visits={visits}></TableListing>
+            <Counter visits={props.visits}></Counter>
+            <TableListing visits={props.visits}></TableListing>
             <div className={classes.root}>
-                <Fab onClick={ () => { window.location = '/addvisit?next=' + (visits.length + 1) } } color="primary" aria-label="add">
+                <Fab  component={RouterLink} to={ '/addvisit?next=' + (props.visits.length + 1) } color="primary" aria-label="add">
                     <AddIcon />
                 </Fab>
             </div>
@@ -66,4 +56,22 @@ const MainDashboard = () => {
     );
 }
 
-export default MainDashboard;
+//state gets injected by redux
+const mapStateToProps = (state) => {
+  return {
+      visits: state.visits
+  }
+}
+
+//dispatch gets injected by redux
+const mapDispatchToProps = (dispatch) => {
+  return {
+    //dispatch is what notifies redux about an action
+    actions: {
+        loadVisits: bindActionCreators(visitActions.loadVisits, dispatch)       
+    }        
+}
+}
+
+//connect the component to redux store and export it
+export default connect(mapStateToProps, mapDispatchToProps)(MainDashboard);
