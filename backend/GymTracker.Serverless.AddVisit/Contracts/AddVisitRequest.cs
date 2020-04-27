@@ -12,5 +12,7 @@ namespace GymTracker.Serverless.AddVisit.Contracts
         public string lockerId { get; set; }
         public string clientId { get; set; }
         public string token { get; set; }
+        public string venue { get; set; }
+
     }
 }

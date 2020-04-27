@@ -18,6 +18,7 @@ namespace GymTracker.Serverless.AddVisit.Models
         public string activity { get; set; }
         public string isCheckedOut { get; set; }
         public List<string> subactivities { get; set; }
-        public string lockerId { get; set; }
+        public string lockerId { get; set; }           
+        public string venue { get; set; }
     }
 }

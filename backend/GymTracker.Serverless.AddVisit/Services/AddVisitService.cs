@@ -35,7 +35,8 @@ namespace GymTracker.Serverless.AddVisit.Services
                 isCheckedOut = request.isCheckedOut,
                 lockerId = request.lockerId,
                 subactivities = request.subactivities,
-                visitId = request.visitId
+                visitId = request.visitId,
+                venue = request.venue
             };
         }
     }

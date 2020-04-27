@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -7,12 +7,14 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import {
     BrowserRouter as Router,
     Switch,
     Route,
     Link,
-    useParams
+    useParams,
+    Redirect
   } from "react-router-dom";
 
 const useStyles = makeStyles({
@@ -25,18 +27,26 @@ const useStyles = makeStyles({
 const TableListing = (props) => {
     const classes = useStyles();
     const visits = props.visits;
+    const [redirect, setRedirect] = useState({ isRedirect: false, location: ""});
 
     /*inner functions*/
 
-    const handleRowClick = (event, data) => {
-        window.location = '/visitadetail/' + data;
+
+    const handleRedirect = (e, data) => {
+      setRedirect({isRedirect: true, location: '/visitadetail/' + data});
     }
+
+    if(redirect.isRedirect) {
+      
+      return (<Redirect to={redirect.location} />)
+    }
+    
 
     /*end inner functions*/
 
     return (
       <div style={{maxWidth: '80%', margin: '0 auto'}}>
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper} >
             <Table className={classes.table} aria-label="simple table">
                 <TableHead>
                 <TableRow>
@@ -50,20 +60,27 @@ const TableListing = (props) => {
                 <TableBody>
                 {visits.map(v => (
                     
-                    <TableRow key={v.visitId}>
-                    <TableCell component="th" scope="row">
-                        
-                    <a href={"/addvisit?visitid=" + v.visitId + "&fecha=" + v.date}>{v.visitId}</a>
-                    </TableCell>
-                    <TableCell align="right">{v.activity}</TableCell>
-                    <TableCell align="right">{v.date}</TableCell>
-                    <TableCell align="right">{v.time}</TableCell>
-                    <TableCell align="right">{v.isCheckedOut}</TableCell>
+                    <TableRow key={v.visitId} onClick={(e) => handleRedirect(e, v.visitId) } >
+                      <TableCell component="th" scope="row">
+                        <Link to={"/addvisit?visitid=" + v.visitId + "&fecha=" + v.date}>{v.visitId}</Link>
+                          
+                      
+                      </TableCell>
+                      <TableCell align="right">{v.activity}</TableCell>
+                      <TableCell align="right">{v.date}</TableCell>
+                      <TableCell align="right">{v.time}</TableCell>
+                      <TableCell align="right">{v.isCheckedOut}</TableCell>
                     </TableRow>
                 ))}
                 </TableBody>
             </Table>
         </TableContainer>
+
+                  {
+                    visits.length == 0 && (<LinearProgress />)
+                  }
+
+        
       </div>
   );
 }

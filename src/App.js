@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import logo from './logo.svg';
 import './App.css';
-import Menu from './components/menu';
 import { makeStyles } from '@material-ui/core/styles';
 import VisitForm from './components/visit-form';
-import VisitaGuardadaa from './components/visita-guardada';
 import VisitaDetail from './components/visit-details';
+import VisitaGuardada from './components/visita-guardada';
 import Layout from './components/layout/Layout';
 import {
   BrowserRouter as Router,
@@ -28,25 +26,6 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-
-function Dashboard() {
-  return (
-    <div>
-      <h2>Dashboard</h2>
-    </div>
-  );
-}
-
-function VisitaGuardada() {
-  return(<VisitaGuardadaa></VisitaGuardadaa>);
-}
-
-const RenderVisitForm = () => {
-  return (
-    <VisitForm />
-  );
-}
-
 const store = configureStore();
 
 function App() {
@@ -61,24 +40,13 @@ function App() {
           <div>
           {/* <Menu /> */}
           <Layout>
-          <Switch>
-              <Route path="/addvisit">
-                <RenderVisitForm />
-              </Route>
+          <Switch> 
+              <Route path="/addvisit" component={VisitForm} />
                 
-              <Route path="/visitaguardada">
-                <VisitaGuardada />
-              </Route>
-              <Route path="/visitadetail">
-                <VisitaDetail />
-              </Route>
-              <Route path="/dashboard">
-                <MainDashboard />
-              </Route>
-             
-              <Route path="/">
-                <MainDashboard />
-              </Route>
+              <Route path="/visitaguardada" component={VisitaGuardada} />              
+              <Route path="/visitadetail" component={VisitaDetail} />
+              <Route path="/dashboard" component={MainDashboard} />             
+              <Route path="/"  component={MainDashboard} />
             </Switch>
             </Layout>
     

@@ -27,8 +27,9 @@ import { bindActionCreators }  from 'redux';
 
 
 
-const MainDashboard = (props) => {
+const MainDashboard = ({history, ...props}) => {
 
+  console.log('history, ', history);
     //use effect hook
     useEffect(() => {
                     
@@ -45,6 +46,7 @@ const MainDashboard = (props) => {
         <React.Fragment>            
             {/* <VisitaActiva /> */}
             <Counter visits={props.visits}></Counter>
+            
             <TableListing visits={props.visits}></TableListing>
             <div className={classes.root}>
                 <Fab  component={RouterLink} to={ '/addvisit?next=' + (props.visits.length + 1) } color="primary" aria-label="add">

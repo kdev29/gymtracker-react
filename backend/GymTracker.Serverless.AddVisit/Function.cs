@@ -39,15 +39,7 @@ namespace GymTracker.Serverless.AddVisit
                 context.Logger.LogLine("Get Request\n");
                 context.Logger.LogLine("Imprimiendo body");
                 context.Logger.LogLine(request.Body);
-                var queryString = request.QueryStringParameters;
-
-                context.Logger.LogLine("Imprimiendo querystring");
-                foreach (var item in queryString)
-                {
-                    context.Logger.LogLine($"{item.Key}:{item.Value}");
-                    
-                }
-
+         
                 var contractRequest = GetRequest(request);
 
                 var clientConfig = new AmazonDynamoDBConfig();

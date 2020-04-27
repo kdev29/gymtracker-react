@@ -6,12 +6,13 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
-import querystringreader from 'querystring-reader';
 import { Redirect, useLocation } from 'react-router-dom';
 import URLs from '../utils/configs';
 import { bindActionCreators } from 'redux';
 import  * as visitActions from '../redux/actions/visitsActions';
 import {connect} from 'react-redux';
+import SaveIcon from '@material-ui/icons/Save';
+
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -29,7 +30,9 @@ const venues = [
 ]
 
 
-const VisitForm = (props) => {
+const VisitForm = ({history, ...props}) => {
+
+    console.log('history, ', history);
 
     const date = new Date();   
     let query = useQuery();
@@ -44,6 +47,7 @@ const VisitForm = (props) => {
     const [selectedSubactivities, setSelectedSubactivities] = useState([]);
     const [initialized, setInitialized] = useState(false);
     const [saved, setSaved] = useState(false);
+    const [saveState, setSaveState] = useState("Save");
 
     const classes = useStyles();
     const activityTypes = [ 'Cardio', 'Fuerza', 'Descanso activo' ];
@@ -141,17 +145,18 @@ const VisitForm = (props) => {
         
         visita.visitId = next;
 
+        setSaveState("Saving...");
+
         axios.post(URLs.addVisitUrl, visita)
           .then(function (response) {
             
             props.actions.loadVisits();
-
+            setSaveState("Saved");
             setSaved(true);
-            alert(response.data + ', redirigiendo...');
-            // window.location = '/visitaguardada';
           })
           .catch(function (error) {
             console.error(error);
+            setSaveState("Save");
             alert(error);
           });
 
@@ -174,7 +179,7 @@ const VisitForm = (props) => {
 
     return(
        
-        <form id='mainForm' onSubmit={handleSubmit} className={classes.root} noValidate autoComplete="off">
+        <form style={{marginBottom: '30px'}} id='mainForm' onSubmit={handleSubmit} className={classes.root} noValidate autoComplete="off">
             {
                 formState.visitId > 0 ? (<h2>Visit #{formState.visitId} </h2>) : (<span></span>)
             }
@@ -195,6 +200,7 @@ const VisitForm = (props) => {
                             shrink: true,
                         }}
                     />
+
                 </div>
                 <div>
                     
@@ -265,12 +271,18 @@ const VisitForm = (props) => {
                 <TextField type='number' value={formState.lockerId} onChange={(e) =>handleLockerChange(e)} required id="standard-required" label="Locker"  />
             </div>
             
-            <Button type='submit'  variant="contained">OK</Button>
+     
+            <Button startIcon={<SaveIcon />} color="primary" type='submit' disabled={saveState != "Save"} variant="contained">{saveState}</Button>
+
+
+
+           
+            
         </form>
     );
 }
 
-// export default VisitForm;
+
 
 
 //state gets injected by redux

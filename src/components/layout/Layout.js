@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Layout = (props) => {
-    debugger;
+    
     return (
         <div className="mdl-layout mdl-js-layout mdl-layout--fixed-header">
   <header className="mdl-layout__header">

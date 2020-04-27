@@ -7,7 +7,7 @@ export function loadVisits() {
     //wrap the function 
     return function(dispatch) {
 
-            debugger;
+            
 
            return axios.get(URLs.getAllURL).then(resp => {
     
