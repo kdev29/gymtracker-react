@@ -14,5 +14,7 @@ namespace GymTracker.Serverless.AddVisit.Contracts
         public string token { get; set; }
         public string venue { get; set; }
 
+        public int calories { get; set; }
+
     }
 }

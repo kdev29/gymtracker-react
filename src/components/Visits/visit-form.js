@@ -1,18 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
 import { Redirect, useLocation } from 'react-router-dom';
-import URLs from '../utils/configs';
+import URLs from '../../utils/configs';
 import { bindActionCreators } from 'redux';
-import  * as visitActions from '../redux/actions/visitsActions';
+import  * as visitActions from '../../redux/actions/visitsActions';
 import {connect} from 'react-redux';
 import SaveIcon from '@material-ui/icons/Save';
-
+import { Paper, Grid, Typography, Divider, Checkbox, ButtonGroup, FormControlLabel } from '@material-ui/core';
+import EventIcon from '@material-ui/icons/Event';
+import RoomIcon from '@material-ui/icons/Room';
+import AccessibilityIcon from '@material-ui/icons/Accessibility';
+import LockIcon from '@material-ui/icons/Lock';
+import HomeIcon from '@material-ui/icons/Home';
+import StoreMallDirectoryIcon from '@material-ui/icons/StoreMallDirectory';
+import PropTypes from 'prop-types';
+import TrainingTypes from './TrainingTypes';
+import { saveVisit } from './visits-service';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -21,26 +29,29 @@ const useStyles = makeStyles(theme => ({
         width: 200,
       },
     },
+    paper: {
+        margin: '10px 0', 
+        padding: theme.spacing(3)        
+    },
+    paperHeader: {
+        display: 'inline-flex',
+        color: '#585353'
+    }
   }));
-
 
 const venues = [
     { id: 1, venue: 'Casa'},
     { id: 2, venue: 'Gimnasio'}
 ]
 
+const VisitForm = ({history, actions, visits, match, ...props}) => {
 
-const VisitForm = ({history, ...props}) => {
-
-    console.log('history, ', history);
-
-    const date = new Date();   
-    let query = useQuery();
-    const next = query.get("next");
-    
+    const date = new Date();       
     let subActivities = [];
     
-    let visitData =  { lockerId: 0, venue: '', isCheckedOut : false, activity: 0, date: date.toLocaleDateString(), time: date.getHours() + ':' + date.getMinutes(), subactivities: [] };
+    let visitData =  { lockerId: 0, venue: '', calories: 0,
+                         isCheckedOut : false, activity: 0, 
+                         date: date.toLocaleDateString(), time: date.getHours() + ':' + date.getMinutes(), subactivities: [] };
         
     const [formState, setFormState] = useState(visitData);    
     const [filteredSubactivities, setfilteredSubactivities] = useState([]);
@@ -67,8 +78,8 @@ const VisitForm = ({history, ...props}) => {
         if(!initialized) {
             setInitialized(true);
             
-            const visitid = query.get("visitid");
-            const fecha = query.get("fecha");
+             const visitid = match.params.next;
+             const fecha = match.params.date;
             
             if(visitid && visitid > 0) {
             
@@ -98,14 +109,9 @@ const VisitForm = ({history, ...props}) => {
         
     });
     
-    function useQuery() {
-        return new URLSearchParams(useLocation().search);
-      }
-
     /*Event handlers*/
+
     function handleChange(event) {
-
-
         formState.activity = event.target.value;
         setFormState(formState);
 
@@ -120,10 +126,26 @@ const VisitForm = ({history, ...props}) => {
         setfilteredSubactivities(filtered);                
     }
 
+    function handleActivityChange(activity) {
+
+        formState.activity = activity;
+        setFormState(formState);
+
+        let filtered = [];
+
+        subActivities.forEach(act =>{
+            
+            if(act.type === activity){
+                filtered.push(act);
+            }            
+        });
+        setfilteredSubactivities(filtered);                
+    }
+
     function handleSubtypeSelection(event){
         const target = event.target;
         const subActivity = subActivities.find(s => s.subType == target.value);
-
+        
         if(target.checked) {     
             if(subActivity)
                 selectedSubactivities.push(subActivity.subType);
@@ -136,21 +158,28 @@ const VisitForm = ({history, ...props}) => {
         formState.subactivities = selectedSubactivities;
         setFormState(formState);
     }
-
     
     const handleSubmit = (event) => {
         event.preventDefault();
         
-        let visita = formState;
-        
-        visita.visitId = next;
+        let visita = formState;        
+        visita.visitId = visits.length + 1;
+
+        if(visita.activity == 0)
+            return false;
+
+        if(visita.subactivities.length == 0)
+            return false;
+
+        if(visita === undefined || visita.venue === "")
+            return false;
 
         setSaveState("Saving...");
 
-        axios.post(URLs.addVisitUrl, visita)
+        saveVisit(visita)
           .then(function (response) {
             
-            props.actions.loadVisits();
+            actions.loadVisits();
             setSaveState("Saved");
             setSaved(true);
           })
@@ -159,9 +188,6 @@ const VisitForm = ({history, ...props}) => {
             setSaveState("Save");
             alert(error);
           });
-
-        
-
     }
 
     const handleLockerChange = (e) => {
@@ -178,19 +204,24 @@ const VisitForm = ({history, ...props}) => {
     }
 
     return(
-       
-        <form style={{marginBottom: '30px'}} id='mainForm' onSubmit={handleSubmit} className={classes.root} noValidate autoComplete="off">
+       <Grid container>
+           <Grid item xs={1} md={4}></Grid>
+           <Grid item xs={10} md={4}>
+           <form style={{marginBottom: '30px'}} id='mainForm' onSubmit={handleSubmit} className={classes.root} noValidate autoComplete="off">
             {
                 formState.visitId > 0 ? (<h2>Visit #{formState.visitId} </h2>) : (<span></span>)
             }
             <div>
-                <h4 className='header4'>¿Cuándo?</h4>
+                <Paper elevation={2} className={classes.paper}>
+                
+                <Typography className={classes.paperHeader}> <EventIcon></EventIcon>¿Cuándo?</Typography>
+                
                 <div>
                     
                     <TextField
                         id="standard-full-width"
                         label="Fecha"
-                        style={{ margin: 8 }}
+                        style={{maxWidth: '90%'}}
                         placeholder="Placeholder"          
                         fullWidth
                         margin="normal"
@@ -206,8 +237,8 @@ const VisitForm = ({history, ...props}) => {
                     
                     <TextField
                         id="standard-full-width"
-                        label="Hora"
-                        style={{ margin: 8 }}
+                        label="Hora"                        
+                        style={{maxWidth: '90%'}}
                         placeholder="Placeholder"          
                         fullWidth
                         margin="normal"
@@ -218,72 +249,74 @@ const VisitForm = ({history, ...props}) => {
                         }}
                     />
                 </div>
+                </Paper>
+                
             </div>
-            <div>
-                    <h4 className='header4'>Dónde?</h4>
+            
+            <Paper elevation={2} className={classes.paper}>
+                        
+            <Typography className={classes.paperHeader}> <RoomIcon></RoomIcon>¿Dónde?</Typography>
                     <div>
                         
                     <Select
-                        style={{minWidth: '200px'}}
+                        style={{maxWidth: '90%', minWidth: '50%'}}
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
                         value={formState.venue}
                         onChange={handleVenueChange}
                     >
                         {                        
-                            venues.map(a => <MenuItem key={a.id} value={a.venue}>{a.venue}</MenuItem>)
+                            venues.map(a => <MenuItem  key={a.id} value={a.venue}> {a.venue == "Casa" ? <HomeIcon /> : <StoreMallDirectoryIcon/>} <Typography style={{margin: '0 8px'}}>{a.venue}</Typography></MenuItem>)
                         }
                     
                     </Select>
                     </div>
-            </div>
-            <div>                
-                <h4 className='header4'>¿Qué entrenamiento es?</h4>           
-                <InputLabel id="demo-simple-select-label">Actividad</InputLabel>
-                <Select
-                style={{minWidth: '200px'}}
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={formState.activity}
-                onChange={handleChange}
-                >
-                    {                        
-                        activityTypes.map(a => <MenuItem key={a} value={a}>{a}</MenuItem>)
-                    }
-                  
-                </Select>
-            </div>
-            
-            <div>
-                <h4 className='header4'>¿Qué hiciste?</h4>   
-   
+            </Paper>
+
+  
+            <TrainingTypes onActivityChange={handleActivityChange} activityTypes={activityTypes} classes={classes} />
+
+            <Paper elevation={2} className={classes.paper}>
+                <Typography  className={classes.paperHeader}> <AccessibilityIcon></AccessibilityIcon>¿Qué hiciste?</Typography>         
+                <Grid container justify="center">
+                            
                 {
                     filteredSubactivities.map(act => (
                         <div key={act.subType}>
-                            <label>{act.subType}</label>
-                            <input onChange={handleSubtypeSelection} checked={act.selected} type='checkbox' value={act.subType} />
+                            
+                            <FormControlLabel 
+                                control={ <Checkbox 
+                                    onChange={handleSubtypeSelection}
+                                    checked={act.selected}
+                                    value={act.subType}                                
+                                    color="primary"
+                                    inputProps={{ 'aria-label': 'secondary checkbox' }}
+                                    />}
+                                label={act.subType}
+                            />
+                           
+                                {/* <label>{act.subType}</label> */}
                         </div>
                     ))
                 }
-            </div>
+                            </Grid>
+            </Paper>
+            <Paper elevation={2} className={classes.paper}>
+            <Typography  className={classes.paperHeader}> <LockIcon></LockIcon>¿Usaste Locker?</Typography>     
             <div>
-            <h4 className='header4'>¿Usaste locker?</h4>   
                 <TextField type='number' value={formState.lockerId} onChange={(e) =>handleLockerChange(e)} required id="standard-required" label="Locker"  />
-            </div>
+                </div>    
+            </Paper>
             
      
             <Button startIcon={<SaveIcon />} color="primary" type='submit' disabled={saveState != "Save"} variant="contained">{saveState}</Button>
-
-
-
-           
-            
         </form>
+           </Grid>
+           <Grid item xs={1} md={4}></Grid>
+        
+       </Grid>
     );
 }
-
-
-
 
 //state gets injected by redux
 const mapStateToProps = (state) => {

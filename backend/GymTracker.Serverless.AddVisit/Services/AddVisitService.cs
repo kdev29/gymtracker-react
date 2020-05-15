@@ -36,7 +36,8 @@ namespace GymTracker.Serverless.AddVisit.Services
                 lockerId = request.lockerId,
                 subactivities = request.subactivities,
                 visitId = request.visitId,
-                venue = request.venue
+                venue = request.venue,
+                calories = request.calories
             };
         }
     }

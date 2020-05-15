@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import { makeStyles } from '@material-ui/core/styles';
-import VisitForm from './components/visit-form';
-import VisitaDetail from './components/visit-details';
+import VisitForm from './components/Visits/visit-form';
 import VisitaGuardada from './components/visita-guardada';
-import Layout from './components/layout/Layout';
 import {
   BrowserRouter as Router,
   Switch,
@@ -14,6 +12,9 @@ import {
 import MainDashboard from './components/dashboard';
 import { Provider } from 'react-redux';
 import configureStore  from './redux/configureStore';
+import DetailsPage from './components/Details/DetailsPage';
+import withLayout from './components/layout/LayoutHOC';
+import { Button } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -28,30 +29,24 @@ const useStyles = makeStyles(theme => ({
 
 const store = configureStore();
 
+const DashBoardWrapper = withLayout(MainDashboard, {title: 'Home', helperButton: { component: Button, location: '/addvisit/0/0', label:"NEW VISIT" }})
+const VisitFormWrapper = withLayout(VisitForm, {title: 'New visit', helperButton: { component: Button, location: '/', label:"CANCEL" }})
+const DetailsPageWrapper = withLayout(DetailsPage, {title: 'Details', helperButton: { component: Button, location: '/', label:"HOME" }})
+const VisitaGuardadaWrapper = withLayout(VisitaGuardada, {title: 'Saved', helperButton: { component: Button, location: '/', label:"HOME" }})
+
 function App() {
        
   return (
-    
     <Provider store={store}>
-
-      <div className="App">
-                    
-        <Router>
-          <div>
-          {/* <Menu /> */}
-          <Layout>
+      <div className="App">                    
+        <Router>         
           <Switch> 
-              <Route path="/addvisit" component={VisitForm} />
-                
-              <Route path="/visitaguardada" component={VisitaGuardada} />              
-              <Route path="/visitadetail" component={VisitaDetail} />
-              <Route path="/dashboard" component={MainDashboard} />             
-              <Route path="/"  component={MainDashboard} />
+              <Route path="/addvisit/:next/:date" component={VisitFormWrapper} />
+              <Route path="/visitaguardada" component={VisitaGuardadaWrapper} />              
+              <Route path="/visitadetail/:slug/:date" component={DetailsPageWrapper} />
+              <Route path="/dashboard" component={DashBoardWrapper} />             
+              <Route path="/"  component={DashBoardWrapper} />
             </Switch>
-            </Layout>
-    
-            
-          </div>
         </Router>
       </div>
     </Provider>

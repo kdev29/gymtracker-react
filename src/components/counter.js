@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import axios from 'axios';
+import { Typography } from '@material-ui/core';
+import AccessibilityNewIcon from '@material-ui/icons/AccessibilityNew';
+import SentimentVerySatisfiedIcon from '@material-ui/icons/SentimentVerySatisfied';
 
 const Counter = (props) => {
     
@@ -26,10 +28,9 @@ const Counter = (props) => {
     return (
         
       <Container fixed>
-          <Paper>
+          <Paper style={{padding: '24px', margin: '24px'}}>
               <div>
-                <h4 className={classes.material.header4}>Visitas esta semana</h4>
-                <h4 className={classes.material.header4}>{props.visits.length}</h4>
+                <Typography  variant="h4" > <SentimentVerySatisfiedIcon style={{color: '#04715d'}} fontSize="large"></SentimentVerySatisfiedIcon> {props.visits.length} rounds this week </Typography>
               </div>
 
               </Paper>

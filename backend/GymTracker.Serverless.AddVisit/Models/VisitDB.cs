@@ -20,5 +20,6 @@ namespace GymTracker.Serverless.AddVisit.Models
         public List<string> subactivities { get; set; }
         public string lockerId { get; set; }           
         public string venue { get; set; }
+        public int calories { get; set; }
     }
 }

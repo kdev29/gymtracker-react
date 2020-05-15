@@ -12,5 +12,7 @@ namespace GymTracker.Serverless.GetSingleVisit.Contracts
         public string isCheckedOut { get; set; }
         public List<string> subactivities { get; set; }
         public string lockerId { get; set; }
+        public int calories { get; set; }
+        public string venue { get; set; }
     }
 }

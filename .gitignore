@@ -29,3 +29,6 @@ yarn-error.log*
 /backend/GymTracker.Serverless.AddVisit/obj/
 /backend/GymTracker.Serverless.AddVisit/bin/
 /backend/GymTracker.Serverless.AddVisit/.vs/
+/backend/GymTracker.Serverless.GetSingleVisit/obj/
+/backend/GymTracker.Serverless.GetSingleVisit/bin/
+/backend/GymTracker.Serverless.GetSingleVisit/.vs/

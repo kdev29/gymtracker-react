@@ -31,7 +31,9 @@ namespace GymTracker.Serverless.GetSingleVisit.Services
                 isCheckedOut = response.isCheckedOut,
                 lockerId = response.lockerId,
                 subactivities = response.subactivities,
-                visitId = response.visitId
+                visitId = response.visitId,
+                calories = response.calories,
+                venue = response.venue
             };
 
             return responseContract;
