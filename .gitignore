@@ -32,3 +32,5 @@ yarn-error.log*
 /backend/GymTracker.Serverless.GetSingleVisit/obj/
 /backend/GymTracker.Serverless.GetSingleVisit/bin/
 /backend/GymTracker.Serverless.GetSingleVisit/.vs/
+src/utils/configs.js
+src/utils/configs.js
