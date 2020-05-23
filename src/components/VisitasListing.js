@@ -63,7 +63,7 @@ export default function TableFolderListing(props)  {
 
   
     const handleRedirect = (e, visit) => {
-      setRedirect({isRedirect: true, location: '/visitadetail/' + visit.visitId + '/' + visit.date });
+      setRedirect({isRedirect: true, location: '/visitadetail/' + visit.visitId + '/' + encodeURIComponent(visit.date) });
     }
 
     if(redirect.isRedirect) {
